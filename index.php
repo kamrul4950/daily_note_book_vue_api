@@ -36,23 +36,61 @@
                         <button type="button" class="btn btn-success btn-block mt-2" v-on:click="addNote">Add Note</button>
                     </div>
                 </div>
-                <div class="card card-body mt-3" v-for="(note ,index) in notes">
+                <div class="card card-body mt-3" v-for="(note ,index) in notes.data">
                     <div class="row">
                         <div class="col-md-8">
                             <h4>{{note.title}}</h4>
                             <p>{{note.description}}</p>
                         </div>
                         <div class="col-md-4 text-right">
-                            <button type="button" class="btn btn-danger" v-on:click="noteDelete(index)">Delete</button>
-                            <button type="button" class="btn btn-warning">Edit</button>
+                            <button type="button" class="btn btn-danger" v-on:click="noteDelete(note.id)">Delete</button>
+                            <button type="button" class="btn btn-warning" v-on:click="noteEdit(note.id)">Edit</button>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--Model Start here-->
+            <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update {{title}}</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="text-success">Note Title</p>
+                                <input type="text" class="form-control" v-model="title">
+                            </div>
+                            <div class="col-md-12">
+                                <p class="text-success">Note Description</p>
+                                <textarea class="form-control" v-model="description" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="button" class="btn btn-success btn-block mt-2" v-on:click="updateNote">Update Note</button>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                    </div>
+                </div>
+                </div>
+            <!--Model end here-->
+
         </div>
     </div>
 
-
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
