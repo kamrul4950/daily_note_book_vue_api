@@ -43,4 +43,12 @@ class Note extends Connection {
         }
             return false;
     }
+
+    public function searchNote($search){
+        $sql = "SELECT * FROM notes where title like ? or description like ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute(array("%$search%","%$search%"));
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $result;
+    }
 }

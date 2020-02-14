@@ -6,23 +6,27 @@ let app =new Vue({
         notes:[],
         successText:'',
         errorText:'',
-        noteIdCarry:''
+        noteIdCarry:'',
+        search:''
     },
     mounted(){
        
         //fetch data from database with api
-        let vm=this;
-        axios.get('http://localhost/daily_note_book_vue_api/api/notes.php')
-        .then(function(response){
-            vm.notes = response.data;
-        })
-        .catch(function(response){
-            console.log(response);
-        })
+        this.fetchNoteAllData();
 
           
     },
     methods:{
+        searchWork(){
+            let vm = this;
+            axios.get('http://localhost/daily_note_book_vue_api/api/search.php?search='+vm.search)
+            .then(function(response){
+                vm.notes = response.data;
+            })
+            .catch(function(error){
+                console.log(error);
+            })
+        },
         addNote(){
             let title= this.title;
             let description = this.description;
@@ -41,13 +45,13 @@ let app =new Vue({
                 
                 axios.post('http://localhost/daily_note_book_vue_api/api/add_note.php',singleNote)
                 .then(function(response){
-                    console.log(response);
+                    vm.fetchNoteAllData();
                 })
                 .catch(function(error){
                     console.log(error);
                 })
 
-                vm.fetchNoteAllData();
+                
                 this.title='',
                 this.description='',
                 this.successText='Note Added..',
